@@ -33,11 +33,8 @@ cask "lazymark" do
 
   binary "lazymark"
 
-  postflight do
-    if OS.mac?
-      system_command "/usr/bin/xattr",
-                     args: ["-dr", "com.apple.quarantine", "#{staged_path}/lazymark"]
-    end
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{staged_path}}/lazymark"], must_succeed: false
   end
 
   # No zap stanza required

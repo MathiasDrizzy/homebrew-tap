@@ -33,11 +33,8 @@ cask "lazyfinder" do
 
   binary "lazyfinder"
 
-  postflight do
-    if OS.mac?
-      system_command "/usr/bin/xattr",
-                     args: ["-dr", "com.apple.quarantine", "#{staged_path}/lazyfinder"]
-    end
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{staged_path}}/lazyfinder"], must_succeed: false
   end
 
   # No zap stanza required
